@@ -1,3 +1,114 @@
+bsdmainutils (9.0.3) unstable; urgency=high
+
+  * Adjustment for weeks starting on Sunday was made at a wrong place. Fixing
+    this should give correct week numbers again. (Closes: #676426)
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 11 Jun 2012 12:25:40 +0200
+
+bsdmainutils (9.0.2) unstable; urgency=low
+
+  * A new sentence should trigger a new line in the manpage source.
+  * Removed patch for fifo handling because upstream found a better way to
+    solve the problem.
+  * Moved cronjob configuration out of the cron file into a default file.
+    (Closes: #672445)
+  * Fixed typo in our patch that adds the introduction of Mac OS X.
+    (Closes: #673093)
+  * Mention that calendar -l is the same as calendar -A. (Closes: #658133)
+  * Bumped Standards-Version to 3.9.3, no changes needed.
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 16 May 2012 17:12:52 +0200
+
+bsdmainutils (9.0.1) unstable; urgency=low
+
+  * Synced with FreeBSD 9 and added the latest changes from OpenBSD calendar
+  * Enabled hardening buildflags.
+    Thanks to Moritz Muehlenhoff <jmm@debian.org> (Closes: #656011)
+  * Allow usage of conflicting options for ncal.
+    Thanks to Peter Selinger <selinger@mathstat.dal.ca>
+  * In column check for a multibyte error when reading a file. (Closes: #636618)
+  * Added option to not ignore empty lines in column. (Closes: #345684)
+  * Added recommended targets build-arch and build-indep to rules file.
+  * Also add python as build dependency to make lintian happy.
+  * Finally added the russian calendar updates from FreeBSD 9.0 that were still
+    missing.
+  * Allow usage of stdin as calendar file. (Closes: #640358)
+
+ -- Michael Meskes <meskes@debian.org>  Thu, 19 Jan 2012 10:11:52 +0100
+
+bsdmainutils (8.2.3) unstable; urgency=low
+
+  * Document that ul changes some special characters. (Closes: #629134)
+  * Added latest Ubuntu release to calendar.
+    Thanks to Colin Watson <cjwatson@ubuntu.com> (Closes: #627096)
+  * Updated Republic of Kazakhstan holidays.
+    Thanks to Timur Birsh <taem@linukz.org> (Closes: #624392)
+  * Correctly convert ru_RU calendar. (Closes: #612044)
+  * Added patch from usptream to make sure all line are correctly displayed in
+    hexdump. (Closes: #612939)
+  * Bumped Standards version to 3.9.2, no changes needed.
+  * Corrected the date of George Harrison's death. (LP: #683163)
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 06 Jun 2011 16:20:29 +0200
+
+bsdmainutils (8.2.2) unstable; urgency=low
+
+  * Fix some wide character problems (LP: #697213). (Closes: #610760) -
+    thanks to Allison Randal <allison@parrot.org>
+
+ -- Michael Meskes <meskes@debian.org>  Wed, 26 Jan 2011 13:04:25 +0100
+
+bsdmainutils (8.2.1) unstable; urgency=low
+
+  * Updates from the upcoming FreeBSD release 8.2:
+    - calendars
+    - hexdump manpages
+    - libcalendar
+    - ncal (Closes: #607960)
+  * Updates from OpenBSD 4.8:
+    - calendar
+  * Adapted, removed and/or re-diffed patches.
+  * Updated debian calendar (Closes: #607837)
+  * Replace Conflict: on older bsdutils version with Break: to make lintian happy.
+
+ -- Michael Meskes <meskes@debian.org>  Mon, 03 Jan 2011 18:57:48 +0100
+
+bsdmainutils (8.0.17) unstable; urgency=low
+
+  * Fixed build failure with --as-needed. (Closes: #604811) - thanks to
+    Matthias Klose <doko@ubuntu.com>
+
+ -- Michael Meskes <meskes@debian.org>  Sun, 28 Nov 2010 16:06:11 +0100
+
+bsdmainutils (8.0.16) unstable; urgency=low
+
+  * Do not ignore weekstart setting when using old style format.
+    (Closes: #603100)
+  * Removed double dash in manpage. (Closes: #602403)
+
+ -- Michael Meskes <meskes@debian.org>  Sun, 14 Nov 2010 15:44:13 +0100
+
+bsdmainutils (8.0.15) unstable; urgency=low
+
+  * Re-added accidently lost parts of patch fixing #590592.
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 05 Nov 2010 16:10:51 +0100
+
+bsdmainutils (8.0.14) unstable; urgency=low
+
+  * Added option to ncal to use oldstyle cal output. (Closes: #590592)
+  * Updated Ubuntu calendar. (Closes: #600067)
+  * In hexdump.1 mention that % is a not supported conversion character.
+    (Closes: #600244)
+  * Bumped Standards version to 3.9.1, no changes needed.
+  * Renamed build dependency on python-hdate to reflect package name
+    change.
+  * Unified some patches and at the same time added a small change to
+    use the right weekstart when looking for the first week of the year.
+    (Closes: #597657)
+
+ -- Michael Meskes <meskes@debian.org>  Fri, 05 Nov 2010 14:15:37 +0100
+
 bsdmainutils (8.0.13) unstable; urgency=low
 
   * Correctly initialize weekstart variable. (Closes: #586190)

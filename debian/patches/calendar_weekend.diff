@@ -10,25 +10,26 @@ Author: Michael Meskes <meskes@debian.org>
 +.Op Fl l Ar num
 +.Op Fl w Ar num
  .Op Fl f Ar calendarfile
- .Op Fl t Ar [[[cc]yy][mm]]dd
- .Sh DESCRIPTION
-@@ -58,7 +60,7 @@
+ .Sm off
+ .Op Fl "t " Oo Oo Oo Ar cc Oc Ar yy Oc Ar mm Oc Ar dd
+@@ -60,7 +62,8 @@
  .It Fl A Ar num
  Print lines from today and next
  .Ar num
 -days (forward, future).
-+days (forward, future). Defaults to one.
++days (forward, future).
++Defaults to one. (same as \-l)
  .It Fl a
  Process the
  .Dq calendar
-@@ -71,6 +73,16 @@
+@@ -73,6 +75,16 @@
  days (backward, past).
  .It Fl b
  Enforce special date calculation mode for KOI8 calendars.
 +.It Fl l Ar num
 +Print lines from today and next
 +.Ar num
-+days (forward, future). Defaults to one.
++days (forward, future). Defaults to one. (same as \-A)
 +.It Fl w Ar num
 +Print lines from today and next
 +.Ar num
@@ -38,7 +39,7 @@ Author: Michael Meskes <meskes@debian.org>
  .It Fl f Pa calendarfile
  Use
  .Pa calendarfile
-@@ -90,6 +102,13 @@
+@@ -97,6 +109,13 @@
  .Dq Paskha=<national_name>
  (for Orthodox Easter) can be used.
  .Pp
@@ -52,7 +53,7 @@ Author: Michael Meskes <meskes@debian.org>
  The
  .Dq CALENDAR
  variable can be used to specify the style.
-@@ -109,6 +128,10 @@
+@@ -116,6 +135,10 @@
  .Dq BODUN=<bodun_prefix>
  where <local_name> can be ru_RU.KOI8-R, uk_UA.KOI8-U or by_BY.KOI8-B.
  .Pp
@@ -63,7 +64,7 @@ Author: Michael Meskes <meskes@debian.org>
  Other lines should begin with a month and day.
  They may be entered in almost any format, either numeric or as character
  strings.
-@@ -150,6 +173,9 @@
+@@ -157,6 +180,9 @@
  .Xr cpp 1
  searches in the current (or home) directory first, and then in the
  directory
@@ -73,7 +74,7 @@ Author: Michael Meskes <meskes@debian.org>
  .Pa /usr/share/calendar .
  Empty lines and lines protected by the C commenting syntax
  .Pq Li /* ... */
-@@ -250,6 +276,34 @@
+@@ -257,6 +283,34 @@
  in the line.
  This is no longer true: the date is only recognized when it occurs
  at the beginning of a line.
@@ -110,7 +111,7 @@ Author: Michael Meskes <meskes@debian.org>
  .Nm
 --- bsdmainutils/usr.bin/calendar/calendar.c	2009-10-29 22:59:13.000000000 +0100
 +++ bsdmainutils/usr.bin/calendar/calendar.c	2009-10-29 23:07:14.000000000 +0100
-@@ -60,6 +60,8 @@
+@@ -46,6 +46,8 @@
  #include "pathnames.h"
  #include "calendar.h"
  
@@ -119,7 +120,7 @@ Author: Michael Meskes <meskes@debian.org>
  char *calendarFile = "calendar";  /* default calendar file */
  char *calendarHome = ".calendar"; /* HOME */
  char *calendarNoMail = "nomail";  /* don't sent mail if this file exists */
-@@ -69,6 +71,7 @@
+@@ -55,6 +57,7 @@
  time_t f_time = 0;
  int bodun_always = 0;
  
@@ -127,7 +128,7 @@ Author: Michael Meskes <meskes@debian.org>
  int f_dayAfter = 0; /* days after current date */
  int f_dayBefore = 0; /* days before current date */
  int f_SetdayAfter = 0; /* calendar invoked with -A */
-@@ -85,7 +88,7 @@
+@@ -71,7 +74,7 @@
  
  	(void)setlocale(LC_ALL, "");
  
@@ -136,7 +137,7 @@ Author: Michael Meskes <meskes@debian.org>
  		switch (ch) {
  		case '-':		/* backward contemptible */
  		case 'a':
-@@ -107,11 +110,16 @@
+@@ -93,11 +96,16 @@
  				errx(1, "specified date is outside allowed range");
  			break;
  
@@ -154,7 +155,7 @@ Author: Michael Meskes <meskes@debian.org>
  		case 'B': /* days before current date */
  			f_dayBefore = atoi(optarg);
  			break;
-@@ -251,13 +259,24 @@
+@@ -237,13 +245,24 @@
  	exit(0);
  }
  
@@ -175,7 +176,7 @@ Author: Michael Meskes <meskes@debian.org>
  {
  	(void)fprintf(stderr,
 -	    "usage: calendar [-ab] [-A num] [-B num] [-f calendarfile] "
--	    "[-t [[[cc]yy][mm]]dd]\n");
+-	    "[-t [[[cc]yy]mm]dd]\n");
 +	    "usage: calendar [-ab] [-A num] [-B num] [-l num] [-w num]"
 +	    "[-f calendarfile] [-t [[[cc]yy][mm]]dd]\n");
  	exit(1);
@@ -183,7 +184,7 @@ Author: Michael Meskes <meskes@debian.org>
  
 --- bsdmainutils/usr.bin/calendar/calendar.h	2009-10-29 22:59:13.000000000 +0100
 +++ bsdmainutils/usr.bin/calendar/calendar.h	2009-10-29 23:08:00.000000000 +0100
-@@ -98,6 +98,7 @@
+@@ -97,6 +97,7 @@
  			      * calendar time--e.g.  Easter or easter depending
  			      * days */
  
@@ -193,7 +194,7 @@ Author: Michael Meskes <meskes@debian.org>
  extern int f_SetdayAfter; /* calendar invoked with -A */
 --- bsdmainutils/usr.bin/calendar/day.c	2009-10-29 22:59:13.000000000 +0100
 +++ bsdmainutils/usr.bin/calendar/day.c	2009-10-29 23:11:33.000000000 +0100
-@@ -173,8 +173,8 @@
+@@ -161,8 +161,8 @@
  		cumdays = daytab[1];
  	else
  		cumdays = daytab[0];
